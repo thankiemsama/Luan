@@ -1,0 +1,296 @@
+1. selection sort
+
+Console.Title = "Selection Sort";
+var numbers = new[] { 10, 3, 1, 7, 9, 2, 0 };
+
+for (int i = 0; i < numbers.Length - 1; i++)
+{
+    int m = i;
+    int maxValue = numbers[i];
+
+    for (int j = i + 1; j < numbers.Length; j++)
+    {
+        if (numbers[j].CompareTo(maxValue) > 0)
+        {
+            m = j;
+            maxValue = numbers[j];
+        }
+    }
+
+    int temp = numbers[i];
+    numbers[i] = numbers[m];
+    numbers[m] = temp;
+
+    Console.WriteLine("Sorted array:");
+    foreach (var number in numbers)
+    {
+        Console.Write(number + " ");
+    }
+
+    Console.ReadKey();
+}
+
+2. Tính tổng của n phần tử trong mảng a có n số nguyên
+
+int[] a = { 1, 2, 3, 4, 5 };
+
+int sum = 0;
+
+for (int i = 0; i < a.Length; i++)
+{
+    sum += a[i];
+}
+
+Console.WriteLine("Tong cua cac phan tu trong mang la: " + sum);
+
+Console.ReadKey();
+
+3. Sắp xếp MergeSort
+
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        int[] a = { 10, 3, 1, 7, 9, 2, 0 };
+
+        Console.WriteLine("Mang ban dau:");
+        PrintArray(a);
+
+        MergeSort(a, 0, a.Length - 1);
+
+        Console.WriteLine("\nMang sau khi sap xep:");
+        PrintArray(a);
+
+        Console.ReadKey();
+    }
+
+    static void MergeSort(int[] arr, int left, int right)
+    {
+        if (left < right)
+        {
+            int middle = left + (right - left) / 2;
+
+            MergeSort(arr, left, middle);
+            MergeSort(arr, middle + 1, right);
+
+            Merge(arr, left, middle, right);
+        }
+    }
+
+    static void Merge(int[] arr, int left, int middle, int right)
+    {
+        int n1 = middle - left + 1;
+        int n2 = right - middle;
+
+        int[] L = new int[n1];
+        int[] R = new int[n2];
+
+        for (int i = 0; i < n1; ++i)
+            L[i] = arr[left + i];
+        for (int j = 0; j < n2; ++j)
+            R[j] = arr[middle + 1 + j];
+
+        int k = left;
+        int p = 0, q = 0;
+        while (p < n1 && q < n2)
+        {
+            if (L[p] <= R[q])
+            {
+                arr[k] = L[p];
+                p++;
+            }
+            else
+            {
+                arr[k] = R[q];
+                q++;
+            }
+            k++;
+        }
+
+        while (p < n1)
+        {
+            arr[k] = L[p];
+            p++;
+            k++;
+        }
+
+        while (q < n2)
+        {
+            arr[k] = R[q];
+            q++;
+            k++;
+        }
+    }
+
+    static void PrintArray(int[] arr)
+    {
+        foreach (var num in arr)
+        {
+            Console.Write(num + " ");
+        }
+        Console.WriteLine();
+    }
+}
+
+4. Sắp xếp QuickSort
+
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        int[] arr = { 10, 80, 30, 90, 40, 50, 70 };
+        Console.WriteLine("Mang ban dau:");
+        PrintArray(arr);
+
+        QuickSort(arr, 0, arr.Length - 1);
+
+        Console.WriteLine("\nMang sau khi duoc sap xep:");
+        PrintArray(arr);
+
+        Console.ReadKey();
+    }
+
+    static void QuickSort(int[] arr, int low, int high)
+    {
+        if (low < high)
+        {
+            int pivot = Partition(arr, low, high);
+
+            QuickSort(arr, low, pivot - 1);
+            QuickSort(arr, pivot + 1, high);
+        }
+    }
+
+    static int Partition(int[] arr, int low, int high)
+    {
+        int pivot = arr[high];
+
+        int i = low - 1;
+
+        for (int j = low; j < high; j++)
+        {
+            if (arr[j] <= pivot)
+            {
+                i++;
+
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+
+        int temp1 = arr[i + 1];
+        arr[i + 1] = arr[high];
+        arr[high] = temp1;
+
+        return i + 1;
+    }
+
+    static void PrintArray(int[] arr)
+    {
+        foreach (var num in arr)
+        {
+            Console.Write(num + " ");
+        }
+        Console.WriteLine();
+    }
+}
+
+5. Tìm kiếm nhị phân
+
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        int[] sortedArray = { 1, 3, 5, 7, 9, 11, 13, 15, 17, 19 };
+        int target = 9;
+
+        int index = BinarySearch(sortedArray, target);
+
+        if (index != -1)
+            Console.WriteLine($"Phan tu {target} duoc tim thay tai vi tri {index}");
+        else
+            Console.WriteLine($"Phan tu {target} khong co trong mang");
+
+        Console.ReadKey();
+    }
+
+    static int BinarySearch(int[] arr, int target)
+    {
+        int left = 0;
+        int right = arr.Length - 1;
+
+        while (left <= right)
+        {
+            int mid = left + (right - left) / 2;
+
+            if (arr[mid] == target)
+                return mid;
+
+            if (arr[mid] < target)
+                left = mid + 1;
+            else
+                right = mid - 1;
+        }
+
+        return -1;
+    }
+}
+
+6. Nhân 2 số nguyên lớn
+
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        string num1 = "12345678901234567890";
+        string num2 = "98765432109876543210";
+
+        string result = MultiplyLargeNumbers(num1, num2);
+
+        Console.WriteLine("ket qua cua " + num1 + " * " + num2 + " la:");
+        Console.WriteLine(result);
+
+        Console.ReadKey();
+    }
+
+    static string MultiplyLargeNumbers(string num1, string num2)
+    {
+        int n1 = num1.Length;
+        int n2 = num2.Length;
+
+        int[] result = new int[n1 + n2];
+
+        char[] arr1 = num1.ToCharArray();
+        char[] arr2 = num2.ToCharArray();
+        Array.Reverse(arr1);
+        Array.Reverse(arr2);
+
+        for (int i = 0; i < n1; i++)
+        {
+            for (int j = 0; j < n2; j++)
+            {
+                result[i + j] += (arr1[i] - '0') * (arr2[j] - '0');
+                result[i + j + 1] += result[i + j] / 10;
+                result[i + j] %= 10;
+            }
+        }
+
+        Array.Reverse(result);
+
+        string multipliedNumber = string.Join("", result).TrimStart('0');
+
+        if (string.IsNullOrEmpty(multipliedNumber))
+            return "0";
+
+        return multipliedNumber;
+    }
+}
